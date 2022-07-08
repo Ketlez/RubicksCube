@@ -1,0 +1,7 @@
+﻿  glad.c
+  main.cpp
+F:\GitHub\OpenGLProject\src\main.cpp(181,20): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+F:\GitHub\OpenGLProject\src\main.cpp(185,25): warning C4244: инициализация: преобразование "double" в "float", возможна потеря данных
+F:\GitHub\OpenGLProject\src\main.cpp(186,57): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+F:\GitHub\OpenGLProject\src\main.cpp(187,57): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+  FirstOpenGL.vcxproj -> F:\GitHub\OpenGLProject\x64\Debug\FirstOpenGL.exe
