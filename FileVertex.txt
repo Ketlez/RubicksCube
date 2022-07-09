@@ -9,11 +9,13 @@ void main()
 {
     
     Pos = aPos;
-    float cicleTime = mod(time, 10)/10;
+    Pos = Pos/2;
+    float cicleTime = time*10;
+    
     float x = Pos.x*cos(cicleTime)-Pos.y*sin(cicleTime);
     float y = Pos.x*sin(cicleTime)+Pos.y*cos(cicleTime);
     
 
-    gl_Position = vec4(x+randomPos.x, y+randomPos.y, aPos.z, 1.0);
+    gl_Position = vec4(x+cos(time*10)/2, y+sin(time*10)/2, aPos.z, 1.0);
     TexCoord = aTexCoord;
 }

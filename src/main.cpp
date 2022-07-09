@@ -19,20 +19,6 @@ const unsigned int SCR_HEIGHT = 500;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 int main()
 {
     // glfw: initialize and configure
@@ -198,9 +184,9 @@ int main()
     float randomPos[2]{ 0 };
     while (!glfwWindowShouldClose(window))
     {
-        float timeValue = glfwGetTime();
-        randomPos[0] = ((float)rand()/RAND_MAX-0.5f)*0.1* timeValue;
-        randomPos[1] = ((float)rand()/RAND_MAX-0.5f)*0.1* timeValue;
+       float timeValue = glfwGetTime();
+       //randomPos[0] = ((float)rand()/RAND_MAX-0.5f)*0.1* timeValue;
+       //randomPos[1] = ((float)rand()/RAND_MAX-0.5f)*0.1* timeValue;
         // input
         // -----
         processInput(window);
