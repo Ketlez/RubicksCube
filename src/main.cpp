@@ -17,6 +17,22 @@ const unsigned int SCR_WIDTH = 500;
 const unsigned int SCR_HEIGHT = 500;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 int main()
 {
     // glfw: initialize and configure
