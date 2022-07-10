@@ -17,8 +17,8 @@ void main()
 
     vec4 color = vec4((sin(red+0.5)+1)/2, (sin(red)+1)/2, 1-(sin(red)+1)/2, 1.0f);
 
-    //if(Pos.x*Pos.x+Pos.y*Pos.y<=0.15)
+    if(Pos.x*Pos.x+Pos.y*Pos.y<=0.02)
     FragColor = mix(texture(ourTexture, textCor), color, 0.5);
-    //else
-    //discard;
+    else
+    discard;
 }

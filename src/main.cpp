@@ -180,8 +180,7 @@ int main()
 
     // render loop
     // -----------
-    std::srand(time(0));
-    float randomPos[2]{ 0 };
+    
     while (!glfwWindowShouldClose(window))
     {
        float timeValue = glfwGetTime();
@@ -198,17 +197,18 @@ int main()
 
         
         int vertexColorLocation = glGetUniformLocation(shaderProgram, "time");
-        int randomPosLocation = glGetUniformLocation(shaderProgram, "randomPos");
+       
 
         // draw our first triangle
         glUseProgram(shaderProgram);
         
         glUniform1f(vertexColorLocation, timeValue);
-        glUniform2f(randomPosLocation, randomPos[0], randomPos[1]);
+        
 
         glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
         
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+       
         // glBindVertexArray(0); // no need to unbind it every time 
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
