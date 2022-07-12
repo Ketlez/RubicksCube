@@ -21,10 +21,13 @@
     <ClCompile Include="src\glad.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="src\Shader.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="FileVertex.txt" />
-    <Text Include="FileVertexPixl.txt" />
+    <Text Include="FvertexShader.txt" />
+    <Text Include="FfragmentShader.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Window.h">
@@ -42,14 +45,14 @@
     <ClInclude Include="src\stb_image.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="src\Shader.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Texture.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="texture\Wood_041.jpg">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="texture\fcb09034073c514b4ce0f7ff42342842.jpg">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
     <Image Include="texture\d848b4d0b5e21b0869d32f22c2ec8cd1.jpg">
       <Filter>Файлы ресурсов</Filter>
     </Image>
