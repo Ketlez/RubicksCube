@@ -1,21 +1,14 @@
 #pragma once
-#include "GLFW.h"
+#include <glad/glad.h>
+
 class VBO
 {
 public:
 	unsigned int vbo;
-	VBO()
-	{
-		glGenBuffers(1, &vbo);
-	}
-	~VBO()
-	{
+	VBO();
+	~VBO();
+	void bind();
+	void unBind();
+	void setData(void* data, int nBytes);
 
-	}
-
-	void setBuffer(void *pointer, int n_byts)
-	{
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glBufferData(GL_ARRAY_BUFFER, n_byts, pointer, GL_STATIC_DRAW);
-	}
 };

@@ -1,22 +1,12 @@
 #pragma once
-#include "GLFW.h"
+#include <glad/glad.h>
 
 class VAO
 {
+public:
     unsigned int vao;
-	VAO()
-	{
-        
-        glGenVertexArrays(1, &vao);
-        glBindVertexArray(vao);
-        
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
-	}
-	~VAO()
-	{
-
-	}
-
-    void vaoSwapBu
+	VAO();
+	~VAO();
+	void attribPointer(int slot, int numberElements, int typedata, int step, int begin); //step - numb* sizeof(float), begin - numb*sizeof(float)
+	void bind();
 };
