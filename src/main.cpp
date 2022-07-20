@@ -32,6 +32,7 @@ int main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+
     // glfw window creation
     // --------------------
     GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
@@ -98,6 +99,7 @@ int main()
     shaderProgram.setInt("ourTexture", 0);
     
     
+    
     while (!glfwWindowShouldClose(window))
     {   
         processInput(window);
@@ -108,6 +110,16 @@ int main()
 
         shaderProgram.use();
         vao.bind();
+
+
+        glm::mat4 trans = glm::mat4(1.0f);
+        trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+        trans = glm::rotate(trans, (float)glfwGetTime()*2, glm::vec3(0.0f, 0.0f, 1.0f));
+        trans = glm::scale(trans, glm::vec3(0.5f, 0.5f, 0.5f));
+
+        shaderProgram.setMatrix("transform", trans);
+
+
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
        
         glfwSwapBuffers(window);
