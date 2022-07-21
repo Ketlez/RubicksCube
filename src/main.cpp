@@ -85,21 +85,38 @@ int main()
     vao.attribPointer(1, 2, GL_FLOAT, 5 * sizeof(float), 3 * sizeof(float));
 
 
-    Texture texture;
+    Texture texture1;
     // load and generate the texture
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true);
-    unsigned char* data = stbi_load("texture/d848b4d0b5e21b0869d32f22c2ec8cd1.jpg", &width, &height, &nrChannels, 0);
-    texture.setData(GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, width, height, data);
+    unsigned char* data = stbi_load("texture/TextureBasik.jpg", &width, &height, &nrChannels, 0);
+    texture1.setData(GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, width, height, data);
     stbi_image_free(data);
 
     shaderProgram.use();
-    texture.activeTexture(0);
-    texture.bind();
-    shaderProgram.setInt("ourTexture", 0);
     
     
     
+    Texture texture2;
+    data = stbi_load("texture/TextureBasik2.jpg", &width, &height, &nrChannels, 0);
+    texture2.setData(GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, width, height, data);
+    stbi_image_free(data);
+
+    shaderProgram.use();
+
+
+
+    
+    
+    
+    texture1.activeTexture(0);
+    texture1.bind();
+    texture2.activeTexture(1);
+    texture2.bind();
+
+    shaderProgram.setInt("ourTexture1", 0);
+    shaderProgram.setInt("ourTexture2", 1);
+
     while (!glfwWindowShouldClose(window))
     {   
         processInput(window);
@@ -108,16 +125,24 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
+        
+
         shaderProgram.use();
         vao.bind();
 
 
-        glm::mat4 trans = glm::mat4(1.0f);
-        trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
-        trans = glm::rotate(trans, (float)glfwGetTime()*2, glm::vec3(0.0f, 0.0f, 1.0f));
-        trans = glm::scale(trans, glm::vec3(0.5f, 0.5f, 0.5f));
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
-        shaderProgram.setMatrix("transform", trans);
+        glm::mat4 view = glm::mat4(1.0f);
+        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
+        glm::mat4 projection;
+        projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH/(float)SCR_HEIGHT, 0.1f, 100.0f);
+
+        shaderProgram.setMatrix("model", model);
+        shaderProgram.setMatrix("view", view);
+        shaderProgram.setMatrix("projection", projection);
 
 
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
