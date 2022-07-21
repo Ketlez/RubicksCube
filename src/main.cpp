@@ -180,9 +180,6 @@ int main()
         shaderProgram.use();
         vao.bind();
 
-
-        
-
         glm::mat4 view = glm::mat4(1.0f);
         view = glm::translate(view, glm::vec3(0.0f, 0.0f, -5.0f));
 
@@ -197,11 +194,12 @@ int main()
         for (unsigned int i = 0; i < 10; i++)
         {
             glm::mat4 model = glm::mat4(1.0f);
-            model = glm::translate(model, cubePositions[i]);
-            float angle = 20.0f * i;
-            model = glm::rotate(model, glm::radians(angle)+ (float)glfwGetTime(), glm::vec3(1.0f, 0.3f, 0.5f));
+            int j = i % 10;
+            model = glm::translate(model, cubePositions[j]);
+            float angle = 20.0f * j;
+            model = glm::rotate(model, glm::radians(angle)* (float)glfwGetTime(), glm::vec3(1.0f, 0.3f, 0.5f));
             shaderProgram.setMatrix("model", model);
-
+            shaderProgram.setFloat("time", (float)glfwGetTime());
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
