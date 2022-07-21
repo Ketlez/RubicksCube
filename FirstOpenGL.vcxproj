@@ -154,6 +154,7 @@
     <ClCompile Include="src\VBO.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Box.txt" />
     <Text Include="FvertexShader.txt" />
     <Text Include="FfragmentShader.txt" />
   </ItemGroup>
