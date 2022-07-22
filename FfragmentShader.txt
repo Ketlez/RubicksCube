@@ -8,15 +8,10 @@ uniform sampler2D ourTexture1;
 uniform sampler2D ourTexture2;
 void main()
 {
-    float speedtime = time;
-    float temp = mod(speedtime, 10);
+    
 
-    float red = ((Pos.y))+temp;
+   FragColor = mix(texture(ourTexture1, TexCoord), texture(ourTexture2, TexCoord), 0.2);
 
-    vec4 color = vec4((sin(red+0.5)+1)/2, (sin(red)+1)/2, 1-(sin(red)+1)/2, 1.0f);
-
-   // FragColor = mix(texture(ourTexture1, TexCoord), texture(ourTexture2, TexCoord), 0.2);
-
-    FragColor = color;
+    
    
 }
