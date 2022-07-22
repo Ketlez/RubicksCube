@@ -173,6 +173,9 @@
     <Image Include="texture\TextureBasik.jpg" />
     <Image Include="texture\TextureBasik2.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitIgnore" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -54,6 +54,9 @@ int main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+    glfwWindowHint(GLFW_SAMPLES, 16);   // default is a 4
+    
+
 
     // glfw window creation
     // --------------------
@@ -65,7 +68,11 @@ int main()
         return -1;
     }
 
+    
+
+
     glfwMakeContextCurrent(window);
+    
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
@@ -194,6 +201,8 @@ int main()
     shaderProgram.setInt("ourTexture2", 1);
 
     int w, h;
+
+    glEnable(GL_MULTISAMPLE);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     while (!glfwWindowShouldClose(window))
     {   
