@@ -13,6 +13,8 @@
 #include <string>
 #include <cstdlib>
 
+#include <ctime>
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
@@ -44,7 +46,7 @@ float fov = 45.0f;
 int main()
 {
 
-
+    srand(time(0));
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
@@ -146,6 +148,15 @@ int main()
     glm::vec3(-1.3f,  1.0f, -1.5f)
     };
 
+    int cubePositions1[10000];
+    for (int i = 0; i < 100; i++)
+    {
+        for (int j = 0; j < 100; j++)
+        {
+            //cubePositions1[i] = 1 + rand() % 10;
+            cubePositions1[i * 100 + j] = glm::perlin(glm::vec2(i/10.f, j/10.f))*5;
+        }
+    }
     VAO vao;
     VBO vbo;
     EBO ebo;
@@ -203,12 +214,13 @@ int main()
         glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
         glm::mat4 projection = glm::mat4(1.0f);
-        projection = glm::perspective(glm::radians(45.0f), (float)w / (float)h, 0.01f, 100.0f);
+        projection = glm::perspective(glm::radians(75.0f), (float)w / (float)h, 0.01f, 100.0f);
 
         
         shaderProgram.setMatrix("view", view);
         shaderProgram.setMatrix("projection", projection);
 
+        shaderProgram.setFloat("time", (float)glfwGetTime());
 
         for (unsigned int i = 0; i < 10; i++)
         {
@@ -218,10 +230,21 @@ int main()
             float angle = 20.0f * j;
             model = glm::rotate(model, glm::radians(angle)* (float)glfwGetTime(), glm::vec3(1.0f, 0.3f, 0.5f));
             shaderProgram.setMatrix("model", model);
-            shaderProgram.setFloat("time", (float)glfwGetTime());
+            
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
+        
 
+        for (unsigned int x = 0; x < 100; x++)
+            for (unsigned int z = 0; z < 100; z++)
+            {
+                glm::mat4 model = glm::mat4(1.0f);
+                
+                model = glm::translate(model, glm::vec3(x, cubePositions1[x*100+z], z));
+                shaderProgram.setMatrix("model", model);
+               
+                glDrawArrays(GL_TRIANGLES, 0, 36);
+            }
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
@@ -238,11 +261,20 @@ void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-    float cameraSpeed = static_cast<float>(2.5 * deltaTime);
+    float cameraSpeed = static_cast<float>(10.5 * deltaTime);
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+    {
+        glm::vec3 posy(cameraFront.x, 0, cameraFront.z);
+
+        //cameraPos += cameraSpeed * glm::normalize(posy);
         cameraPos += cameraSpeed * cameraFront;
+    }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    {
+        glm::vec3 posy(cameraFront.x, 0, cameraFront.z);
+        //cameraPos -= cameraSpeed * glm::normalize(posy);
         cameraPos -= cameraSpeed * cameraFront;
+    }
     //if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
     //    cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
     //if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
@@ -251,8 +283,6 @@ void processInput(GLFWwindow* window)
         cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-
-
 }
 
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
