@@ -223,13 +223,13 @@ int main()
         glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
         glm::mat4 projection = glm::mat4(1.0f);
-        projection = glm::perspective(glm::radians(75.0f), (float)w / (float)h, 0.01f, 100.0f);
+        projection = glm::perspective(glm::radians(75.0f), (float)w / (float)h, 0.01f, 500.0f);
 
         
         shaderProgram.setMatrix("view", view);
         shaderProgram.setMatrix("projection", projection);
-
-        shaderProgram.setFloat("time", (float)glfwGetTime());
+        float time = (float)glfwGetTime();
+        shaderProgram.setFloat("time", time);
 
         for (unsigned int i = 0; i < 10; i++)
         {
@@ -237,7 +237,7 @@ int main()
             int j = i % 10;
             model = glm::translate(model, cubePositions[j]);
             float angle = 20.0f * j;
-            model = glm::rotate(model, glm::radians(angle)* (float)glfwGetTime(), glm::vec3(1.0f, 0.3f, 0.5f));
+            model = glm::rotate(model, glm::radians(angle)* time, glm::vec3(1.0f, 0.3f, 0.5f));
             shaderProgram.setMatrix("model", model);
             
             glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -248,8 +248,9 @@ int main()
             for (unsigned int z = 0; z < 100; z++)
             {
                 glm::mat4 model = glm::mat4(1.0f);
-                
+                model = glm::rotate(model, glm::radians(x * 100.f + z) * time /20.f, glm::vec3(sin(time), (1-sin(time)), cos(time)));
                 model = glm::translate(model, glm::vec3(x, cubePositions1[x*100+z], z));
+                model = glm::rotate(model, glm::radians(x * 100.f + z) + time, glm::vec3(1.0f, 0.3f, 0.5f));
                 shaderProgram.setMatrix("model", model);
                
                 glDrawArrays(GL_TRIANGLES, 0, 36);
