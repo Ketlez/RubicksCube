@@ -83,8 +83,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>F:\OpenGL\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\OpenGL\Libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\OpenGL\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\OpenGL\Libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

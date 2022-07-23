@@ -28,7 +28,7 @@ const unsigned int SCR_HEIGHT = 500;
 bool fullsize = false;
 bool fullscreen = false;
 
-glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 115.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
@@ -161,7 +161,7 @@ int main()
         for (int j = 0; j < 100; j++)
         {
             //cubePositions1[i] = 1 + rand() % 10;
-            cubePositions1[i * 100 + j] = glm::perlin(glm::vec2(i/10.f, j/10.f))*5;
+            cubePositions1[i * 100 + j] = glm::perlin(glm::vec2(i/20.f, j/5.f))*5;
         }
     }
     VAO vao;
@@ -211,6 +211,7 @@ int main()
         lastFrame = currentFrame;
         processInput(window);
 
+        std::cout << cameraPos.z << std::endl;
         
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -223,38 +224,32 @@ int main()
         glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
         glm::mat4 projection = glm::mat4(1.0f);
-        projection = glm::perspective(glm::radians(75.0f), (float)w / (float)h, 0.01f, 500.0f);
+        projection = glm::perspective(glm::radians(75.0f), (float)w / (float)h, 5.f, 5000.0f);
 
         
         shaderProgram.setMatrix("view", view);
         shaderProgram.setMatrix("projection", projection);
         float time = (float)glfwGetTime();
         shaderProgram.setFloat("time", time);
-
-        for (unsigned int i = 0; i < 10; i++)
-        {
-            glm::mat4 model = glm::mat4(1.0f);
-            int j = i % 10;
-            model = glm::translate(model, cubePositions[j]);
-            float angle = 20.0f * j;
-            model = glm::rotate(model, glm::radians(angle)* time, glm::vec3(1.0f, 0.3f, 0.5f));
-            shaderProgram.setMatrix("model", model);
-            
-            glDrawArrays(GL_TRIANGLES, 0, 36);
-        }
         
 
         for (unsigned int x = 0; x < 100; x++)
             for (unsigned int z = 0; z < 100; z++)
             {
                 glm::mat4 model = glm::mat4(1.0f);
-                model = glm::rotate(model, glm::radians(x * 100.f + z) * time /20.f, glm::vec3(sin(time), (1-sin(time)), cos(time)));
+                
+                model = glm::rotate(model, glm::radians(x * 100.f + z) * time /20.f-3.14f, glm::vec3(sin(time), (1-sin(time)), cos(time )));
+                
                 model = glm::translate(model, glm::vec3(x, cubePositions1[x*100+z], z));
-                model = glm::rotate(model, glm::radians(x * 100.f + z) + time, glm::vec3(1.0f, 0.3f, 0.5f));
+                
+                model = glm::rotate(model, glm::radians((x * 100.f + z)) + time, glm::vec3(1.0f, 0.3f, 0.5f));
+              
+
                 shaderProgram.setMatrix("model", model);
                
                 glDrawArrays(GL_TRIANGLES, 0, 36);
             }
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
@@ -271,7 +266,7 @@ void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-    float cameraSpeed = static_cast<float>(10.5 * deltaTime);
+    float cameraSpeed = static_cast<float>(100.5 * deltaTime);
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
     {
         glm::vec3 posy(cameraFront.x, 0, cameraFront.z);
