@@ -57,7 +57,6 @@ int main()
     glfwWindowHint(GLFW_SAMPLES, 16);   // default is a 4
     
 
-
     // glfw window creation
     // --------------------
     GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
@@ -67,9 +66,6 @@ int main()
         glfwTerminate();
         return -1;
     }
-
-    
-
 
     glfwMakeContextCurrent(window);
     
@@ -95,11 +91,11 @@ int main()
     // ------------------------------------------------------------------
     float vertices[] = {
      -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
      0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
      0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
     -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
 
     -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
      0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
@@ -123,11 +119,11 @@ int main()
     -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
 
      0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
      0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
      0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
      0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
 
      0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
      0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
@@ -201,7 +197,7 @@ int main()
     shaderProgram.setInt("ourTexture2", 1);
 
     int w, h;
-
+    glEnable(GL_CULL_FACE);
     glEnable(GL_MULTISAMPLE);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     while (!glfwWindowShouldClose(window))
