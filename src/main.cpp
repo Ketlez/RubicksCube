@@ -1,6 +1,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
+#define _USE_MATH_DEFINES
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
@@ -13,8 +13,11 @@
 #include "EBO.h"
 #include <iostream>
 #include <string>
+#include <cmath>
 
 #include <ctime>
+
+#include "CubeRub.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -32,7 +35,7 @@ bool fullscreen = false;
 float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 
-Camera camera(glm::vec3(0.0f, 2.0f, 0.0f));
+Camera camera(glm::vec3(0.0f, 0.0f, 5.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -83,64 +86,57 @@ int main()
     glEnable(GL_DEPTH_TEST);
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
-    float vertices[] = {
-     -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f
-    };
     
+    float vertices[] = {
+    -0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
+    0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.0f,
+    0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 0.0f,
+    0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.0f,
+   -0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 0.0f,
+   -0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.0f,
+
+   -0.5f, -0.5f, -0.5f,   1.0f, 1.0f, 0.0f,
+    0.5f, -0.5f, -0.5f,   1.0f, 1.0f, 0.0f,
+    0.5f, -0.5f,  0.5f,   1.0f, 1.0f, 0.0f,
+    0.5f, -0.5f,  0.5f,   1.0f, 1.0f, 0.0f,
+   -0.5f, -0.5f,  0.5f,   1.0f, 1.0f, 0.0f,
+   -0.5f, -0.5f, -0.5f,   1.0f, 1.0f, 0.0f,
+
+   -0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
+    0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
+    0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
+    0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
+   -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
+   -0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
+
+   -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 1.0f,
+   -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 1.0f,
+   -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 1.0f,
+   -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 1.0f,
+   -0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 1.0f,
+   -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 1.0f,
+
+    0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 1.0f,
+    0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 1.0f,
+    0.5f,  0.5f, -0.5f,  1.0f, 0.0f, 1.0f,
+    0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 1.0f,
+    0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 1.0f,
+    0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f,
+
+    0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
+    0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
+   -0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
+   -0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
+   -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
+    0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
+    };
+
     unsigned int indices[] = {  // note that we start from 0!
         0, 1, 3,   // first triangle
         1, 2, 3
     };
 
-    int cubePositions1[10000];
-    for (int i = 0; i < 100; i++)
-    {
-        for (int j = 0; j < 100; j++)
-        {
-            //cubePositions1[i] = 1 + rand() % 10;
-            cubePositions1[i * 100 + j] = glm::perlin(glm::vec2(i/10.f, j/10.f))*5;
-        }
-    }
+    
     VAO vao;
     VBO vbo;
     EBO ebo;
@@ -149,8 +145,8 @@ int main()
     vbo.setData(vertices, sizeof(vertices));
     ebo.bind();
     ebo.setData(indices, sizeof(indices));
-    vao.attribPointer(0, 3, GL_FLOAT, 5 * sizeof(float), 0);
-    vao.attribPointer(1, 2, GL_FLOAT, 5 * sizeof(float), 3 * sizeof(float));
+    vao.attribPointer(0, 3, GL_FLOAT, 6 * sizeof(float), 0);
+    vao.attribPointer(1, 3, GL_FLOAT, 6 * sizeof(float), 3 * sizeof(float));
 
     Texture texture1;
     // load and generate the texture
@@ -176,7 +172,7 @@ int main()
 
     shaderProgram.setInt("ourTexture1", 0);
     shaderProgram.setInt("ourTexture2", 1);
-
+    CubRub cub;
     int w, h;
     glEnable(GL_CULL_FACE);
     glEnable(GL_MULTISAMPLE);
@@ -209,16 +205,51 @@ int main()
         shaderProgram.setFloat("time", (float)glfwGetTime());
         
 
-        for (unsigned int x = 0; x < 100; x++)
-            for (unsigned int z = 0; z < 100; z++)
-            {
-                glm::mat4 model = glm::mat4(1.0f);
-                
-                model = glm::translate(model, glm::vec3(x, cubePositions1[x*100+z], z));
-                shaderProgram.setMatrix("model", model);
+        float timeCub = (float)glfwGetTime();
+        //glm::mat4 model = glm::mat4(1.0f);
+        //model = glm::rotate(model, timeCub, glm::vec3(0, 0, 1));
+        //model = glm::translate(model, glm::vec3(0, 0, 0));
+        //shaderProgram.setMatrix("model", model);
+        //glDrawArrays(GL_TRIANGLES, 0, 36);
+     
+        if (timeCub<=3*M_PI)
+        {
+            
                
-                glDrawArrays(GL_TRIANGLES, 0, 36);
-            }
+            glm::mat4 model = glm::mat4(1.0f);
+            model = cub.rotateA(model, (float)glfwGetTime(), shaderProgram);
+        }
+        else
+        if (timeCub <= 7 * M_PI)
+        {
+            
+            glm::mat4 model = glm::mat4(1.0f);
+            model = cub.rotateB(model, (float)glfwGetTime(), shaderProgram);
+        }
+        //else
+        //{ 
+        //    timeCub = 7 * M_PI - timeCub;
+        //    if (timeCub >= 0) {
+        //        if (timeCub >= 3 * M_PI) {
+        //
+        //            glm::mat4 model = glm::mat4(1.0f);
+        //            model = cub.rotateB(model, timeCub, shaderProgram);
+        //        }
+        //        else
+        //        {
+        //
+        //            glm::mat4 model = glm::mat4(1.0f);
+        //            model = cub.rotateA(model, timeCub, shaderProgram);
+        //
+        //        }
+        //    }
+        //}
+        
+
+        
+        
+        //glDrawArrays(GL_TRIANGLES, 0, 36);
+                
         glfwSwapBuffers(window);
         glfwPollEvents();
     }

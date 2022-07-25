@@ -1,9 +1,4 @@
 ﻿  main.cpp
-D:\GitHub\OpenGLProject\src\main.cpp(141,81): warning C4244: =: преобразование "T" в "int", возможна потеря данных
-          with
-          [
-              T=float
-          ]
 glfw3.lib(init.obj) : warning LNK4099: "glfw3.pdb" PDB не найден с "glfw3.lib(init.obj)" или на "D:\GitHub\OpenGLProject\x64\Debug\glfw3.pdb"; компоновка объекта выполняется как при отсутствии отладочных данных
 glfw3.lib(monitor.obj) : warning LNK4099: "glfw3.pdb" PDB не найден с "glfw3.lib(monitor.obj)" или на "D:\GitHub\OpenGLProject\x64\Debug\glfw3.pdb"; компоновка объекта выполняется как при отсутствии отладочных данных
 glfw3.lib(window.obj) : warning LNK4099: "glfw3.pdb" PDB не найден с "glfw3.lib(window.obj)" или на "D:\GitHub\OpenGLProject\x64\Debug\glfw3.pdb"; компоновка объекта выполняется как при отсутствии отладочных данных

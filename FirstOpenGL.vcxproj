@@ -160,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\CubeRub.h" />
     <ClInclude Include="src\EBO.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\GLFW.h" />

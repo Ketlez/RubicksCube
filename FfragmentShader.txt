@@ -1,11 +1,10 @@
 #version 330 core
 out vec4 FragColor;
-in vec2 TexCoord;
+in vec3 ColorCub;
 in vec4 Pos;
 
 uniform float time;
-uniform sampler2D ourTexture1;
-uniform sampler2D ourTexture2;
+
 void main()
 {
 	float temp = mod(time, 4);
@@ -13,12 +12,10 @@ void main()
 	temp=4-temp;
 	float red = (Pos.y-0.5)+temp;
 	vec4 color= vec4(red, 0, 0, 1);
-
-   //FragColor = texture(ourTexture1, TexCoord);
    
    if(abs(Pos.x)+abs(Pos.y)>=0.9||abs(Pos.x)+abs(Pos.z)>=0.9||abs(Pos.z)+abs(Pos.y)>=0.9)
    FragColor = vec4(1,1,1,1);
    else
-   FragColor = color;
+   FragColor = vec4(ColorCub, 1);
 
 }
