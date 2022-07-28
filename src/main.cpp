@@ -176,6 +176,7 @@ int main()
     int w, h;
     glEnable(GL_CULL_FACE);
     glEnable(GL_MULTISAMPLE);
+    float delTime = 0.f;
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     while (!glfwWindowShouldClose(window))
     {   
@@ -204,46 +205,11 @@ int main()
 
         shaderProgram.setFloat("time", (float)glfwGetTime());
         
-
-        float timeCub = (float)glfwGetTime();
-        //glm::mat4 model = glm::mat4(1.0f);
-        //model = glm::rotate(model, timeCub, glm::vec3(0, 0, 1));
-        //model = glm::translate(model, glm::vec3(0, 0, 0));
-        //shaderProgram.setMatrix("model", model);
-        //glDrawArrays(GL_TRIANGLES, 0, 36);
      
-        if (timeCub<=3*M_PI)
-        {
+          
             
-               
-            glm::mat4 model = glm::mat4(1.0f);
-            model = cub.rotateA(model, (float)glfwGetTime(), shaderProgram);
-        }
-        else
-        if (timeCub <= 7 * M_PI)
-        {
-            
-            glm::mat4 model = glm::mat4(1.0f);
-            model = cub.rotateB(model, (float)glfwGetTime(), shaderProgram);
-        }
-        //else
-        //{ 
-        //    timeCub = 7 * M_PI - timeCub;
-        //    if (timeCub >= 0) {
-        //        if (timeCub >= 3 * M_PI) {
-        //
-        //            glm::mat4 model = glm::mat4(1.0f);
-        //            model = cub.rotateB(model, timeCub, shaderProgram);
-        //        }
-        //        else
-        //        {
-        //
-        //            glm::mat4 model = glm::mat4(1.0f);
-        //            model = cub.rotateA(model, timeCub, shaderProgram);
-        //
-        //        }
-        //    }
-        //}
+        cub.Move(deltaTime, shaderProgram, Move::F_);
+        
         
 
         
