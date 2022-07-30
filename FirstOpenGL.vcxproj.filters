@@ -36,6 +36,12 @@
     <ClCompile Include="src\EBO.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="src\RubicsCubeMove.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RubiksCubeModel.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="FvertexShader.txt" />
@@ -70,7 +76,10 @@
     <ClInclude Include="src\Camera.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\CubeRub.h">
+    <ClInclude Include="src\RubiksCubeMove.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RubiksCubeModel.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

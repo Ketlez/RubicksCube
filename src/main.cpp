@@ -17,7 +17,8 @@
 
 #include <ctime>
 
-#include "CubeRub.h"
+#include "RubiksCubeModel.h"
+#include "RubiksCubeMove.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -79,105 +80,28 @@ int main()
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
-    
-    // build and compile our shader program
-    Shader shaderProgram("FvertexShader.txt", "FfragmentShader.txt");
 
     glEnable(GL_DEPTH_TEST);
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
-    
-    float vertices[] = {
-    -0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
-    0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.0f,
-    0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 0.0f,
-    0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.0f,
-   -0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 0.0f,
-   -0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.0f,
-
-   -0.5f, -0.5f, -0.5f,   1.0f, 1.0f, 0.0f,
-    0.5f, -0.5f, -0.5f,   1.0f, 1.0f, 0.0f,
-    0.5f, -0.5f,  0.5f,   1.0f, 1.0f, 0.0f,
-    0.5f, -0.5f,  0.5f,   1.0f, 1.0f, 0.0f,
-   -0.5f, -0.5f,  0.5f,   1.0f, 1.0f, 0.0f,
-   -0.5f, -0.5f, -0.5f,   1.0f, 1.0f, 0.0f,
-
-   -0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-    0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-    0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-    0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-   -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-   -0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-
-   -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 1.0f,
-   -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 1.0f,
-   -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 1.0f,
-   -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 1.0f,
-   -0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 1.0f,
-   -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 1.0f,
-
-    0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 1.0f,
-    0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 1.0f,
-    0.5f,  0.5f, -0.5f,  1.0f, 0.0f, 1.0f,
-    0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 1.0f,
-    0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 1.0f,
-    0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f,
-
-    0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
-    0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
-   -0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
-   -0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
-   -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
-    0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
-    };
-
-    unsigned int indices[] = {  // note that we start from 0!
-        0, 1, 3,   // first triangle
-        1, 2, 3
-    };
-
-    
-    VAO vao;
-    VBO vbo;
-    EBO ebo;
-    vao.bind();
-    vbo.bind();
-    vbo.setData(vertices, sizeof(vertices));
-    ebo.bind();
-    ebo.setData(indices, sizeof(indices));
-    vao.attribPointer(0, 3, GL_FLOAT, 6 * sizeof(float), 0);
-    vao.attribPointer(1, 3, GL_FLOAT, 6 * sizeof(float), 3 * sizeof(float));
-
-    Texture texture1;
-    // load and generate the texture
-    int width, height, nrChannels;
-    stbi_set_flip_vertically_on_load(true);
-    unsigned char* data = stbi_load("texture/TextureBasik.jpg", &width, &height, &nrChannels, 0);
-    texture1.setData(GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, width, height, data);
-    stbi_image_free(data);
-
-    shaderProgram.use();
-    
-    Texture texture2;
-    data = stbi_load("texture/TextureBasik2.jpg", &width, &height, &nrChannels, 0);
-    texture2.setData(GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, width, height, data);
-    stbi_image_free(data);
-
-    shaderProgram.use();
-    
-    texture1.activeTexture(0);
-    texture1.bind();
-    texture2.activeTexture(1);
-    texture2.bind();
-
-    shaderProgram.setInt("ourTexture1", 0);
-    shaderProgram.setInt("ourTexture2", 1);
-    CubRub cub;
+   
     int w, h;
     glEnable(GL_CULL_FACE);
     glEnable(GL_MULTISAMPLE);
-    float delTime = 0.f;
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+    RubiksCube::Model cube;
+    cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::F, 1.f));
+    cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::F, 1.f));
+    cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::F, 1.f));
+                                                              
+    cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::U, 1.f));
+    cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::U, 1.f));
+    cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::U, 1.f));
+
+
+
+   
+
     while (!glfwWindowShouldClose(window))
     {   
         float currentFrame = static_cast<float>(glfwGetTime());
@@ -191,25 +115,14 @@ int main()
 
         glfwGetWindowSize(window, &w, &h);
 
-        shaderProgram.use();
-        vao.bind();
 
         glm::mat4 view = camera.GetViewMatrix();
 
         glm::mat4 projection = glm::mat4(1.0f);
         projection = glm::perspective(glm::radians(camera.Zoom), (float)w / (float)h, 0.01f, 100.0f);
-
+        glm::mat4 model = glm::mat4(1.0f);
         
-        shaderProgram.setMatrix("view", view);
-        shaderProgram.setMatrix("projection", projection);
-
-        shaderProgram.setFloat("time", (float)glfwGetTime());
-        
-     
-          
-            
-        cub.Move(deltaTime, shaderProgram, Move::F_);
-        
+        cube.draw(view, projection, model, deltaTime);
         
 
         
