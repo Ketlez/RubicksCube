@@ -2,6 +2,7 @@
 #include <glm/glm.hpp>
 
 class VBO;
+class Shader;
 
 namespace RubiksCube {
 
@@ -27,7 +28,9 @@ public:
 	Move(Type type, const float timeInSec = 0.5f);
 
 	bool drawAtMove(
-		float* vertices, VBO &vbo,
+		float* vertices, 
+		Shader &shader, 
+		VBO &vbo,
 		const float deltaTime);
 private:
 	enum class RotateFace
@@ -41,6 +44,7 @@ private:
 	};
 	static bool rotate(
 		float* vertices,
+		Shader &sader,
 		VBO &vbo,
 		RotateFace face,
 		bool isClockwise,

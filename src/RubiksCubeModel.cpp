@@ -33,6 +33,7 @@ void RubiksCube::Model::draw(glm::mat4 viewMatrix, glm::mat4 projectionMatrix, g
 	m_shader.setMatrix("view", viewMatrix);
 	m_shader.setMatrix("projection", projectionMatrix);
 	m_shader.setMatrix("model", model);
+	//m_shader.setMatrix("model", model);
 
 
 	if (m_moves.empty()) {
@@ -40,7 +41,7 @@ void RubiksCube::Model::draw(glm::mat4 viewMatrix, glm::mat4 projectionMatrix, g
 		return;
 	}
 	
-	if (m_moves.front().drawAtMove(&vertices[0], m_vbo, deltaTime))
+	if (m_moves.front().drawAtMove(&vertices[0], m_shader, m_vbo, deltaTime))
 		m_moves.pop();
 }
 

@@ -90,9 +90,9 @@ int main()
     glEnable(GL_MULTISAMPLE);
 
     RubiksCube::Model cube;
-    cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::F, 1.f));
-    cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::F, 1.f));
-    cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::F, 1.f));
+   cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::F, 1.f));
+   cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::F, 1.f));
+   cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::F, 1.f));
                                                               
     cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::U, 1.f));
     cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::U, 1.f));

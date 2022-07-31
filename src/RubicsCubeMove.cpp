@@ -3,6 +3,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "VBO.h"
+#include "Shader.h"
 #include <iostream>
 
 RubiksCube::Move::Move(Type type, const float timeInSec)
@@ -11,7 +12,7 @@ RubiksCube::Move::Move(Type type, const float timeInSec)
 {
 }
 
-bool RubiksCube::Move::drawAtMove(float* vertices, VBO &vbo, const float deltaTime)
+bool RubiksCube::Move::drawAtMove(float* vertices, Shader &shader, VBO &vbo, const float deltaTime)
 {
 	bool isClockwise = true;
 	RotateFace face = RotateFace::FRONT;
@@ -68,6 +69,7 @@ bool RubiksCube::Move::drawAtMove(float* vertices, VBO &vbo, const float deltaTi
 
 	return rotate(
 		vertices,
+		shader,
 		vbo,
 		face,
 		isClockwise,
@@ -78,6 +80,7 @@ bool RubiksCube::Move::drawAtMove(float* vertices, VBO &vbo, const float deltaTi
 
 bool RubiksCube::Move::rotate(
 	float* vertices,
+	Shader &shader,
 	VBO &vbo,
 	RotateFace face,
 	bool isClockwise,
@@ -123,7 +126,10 @@ bool RubiksCube::Move::rotate(
 	}
 
 	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::rotate(model, (isClockwise ? 1.f : -1.f) * glm::radians(deltaTime / timeInSec * 90.f), glm::vec3(X, Y, Z));
+	glm::mat4 reverseModel = glm::mat4(1.0f);
+	model = glm::rotate(glm::mat4(1.0f), (isClockwise ? 1.f : -1.f) * glm::radians(deltaTime / timeInSec * 90.f), glm::vec3(X, Y, Z));
+	reverseModel = glm::rotate(glm::mat4(1.0f), (isClockwise ? -1.f : 1.f) * glm::radians(currentTime / timeInSec * 90.f), glm::vec3(X, Y, Z));
+	shader.setMatrix("reverseModel", reverseModel);
 	
 	for (int i = 0; i < 27; i++) {
 		for (int j = 0; j < 36; j++) {
@@ -137,6 +143,7 @@ bool RubiksCube::Move::rotate(
 		if(flag)
 			for (int j = 0; j < 36; j++) {
 				glm::vec4 Vert = model * glm::vec4(vertices[i * 216 + j * 6 + 0], vertices[i * 216 + j * 6 + 1], vertices[i * 216 + j * 6 + 2], 1);
+				
 				vertices[i * 216 + j * 6 + 0] = Vert.x;
 				vertices[i * 216 + j * 6 + 1] = Vert.y;
 				vertices[i * 216 + j * 6 + 2] = Vert.z;
@@ -148,13 +155,14 @@ bool RubiksCube::Move::rotate(
 					vertices[i * 216 + j * 6 + 1] = round(vertices[i * 216 + j * 6 + 1] * 10) / 10;
 					vertices[i * 216 + j * 6 + 2] = round(vertices[i * 216 + j * 6 + 2] * 10) / 10;
 
-
+					
 				}
+				//std::cout << vertices[i * 216 + j * 6 + 0] << std::endl;
 			}
 		flag = true;
 	}
 
-
+	
 	vbo.setData(vertices, sizeof(vertices[0])*5832);
 	glDrawArrays(GL_TRIANGLES, 0, 972);
 

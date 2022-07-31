@@ -8,11 +8,24 @@ out vec4 Pos;
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
+uniform mat4 reverseModel;
+
+uniform bool rotate;
 
 void main()
 {
     ColorCub = aColorCub;
-    Pos = vec4(aPos, 1);
+
+
+   //if(abs(aPos.x)!=0.5f||abs(aPos.x)!=1.5f||abs(aPos.y)!=0.5f||abs(aPos.y)!=1.5f||abs(aPos.z)!=0.5f||abs(aPos.z)!=1.5f)
+   if(mod(abs(aPos.x)+abs(aPos.y)+abs(aPos.z), 0.5)>0)
+   {
+        Pos = reverseModel * vec4(aPos, 1.0);
+   }
+   else
+   {
+        Pos = vec4(aPos, 1.0);
+   }
     gl_Position = projection * view * model * vec4(aPos, 1.0);
    
 }
