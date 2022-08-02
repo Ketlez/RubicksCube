@@ -1,6 +1,6 @@
 #pragma once
 
-#include <queue>
+#include <stack>
 
 #include "Shader.h"
 #include "VAO.h"
@@ -1018,10 +1018,10 @@ namespace RubiksCube {
 		void pushMove(const Move& move);
 		bool hasMoves() const;
 		void draw(glm::mat4 viewMatrix, glm::mat4 projectionMatrix, glm::mat4 model, const float deltaTime);
+		void generationCube(int numberTurns);
 	private:
 		void drawStatic();
-		std::queue<Move> m_moves;
-
+		std::stack<Move> m_moves;
 		Shader m_shader;
 		VAO m_vao;
 		VBO m_vbo;

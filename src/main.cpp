@@ -44,14 +44,14 @@ bool firstMouse = true;
 
 int main()
 {
-
+    srand(time(0));
  
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    glfwWindowHint(GLFW_SAMPLES, 32);  
+    glfwWindowHint(GLFW_SAMPLES, 32);
     
 
     GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
@@ -87,17 +87,7 @@ int main()
     glEnable(GL_MULTISAMPLE);
 
     RubiksCube::Model cube;
-   cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::F, 1.f));
-   cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::F, 1.f));
-   cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::F, 1.f));
-                                                              
-    cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::U, 1.f));
-    cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::U, 1.f));
-    cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::U, 1.f));
-
-
-
-   
+    cube.generationCube(50);
 
     while (!glfwWindowShouldClose(window))
     {   
