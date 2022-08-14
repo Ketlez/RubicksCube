@@ -122,7 +122,6 @@ bool RubiksCube::Move::rotate(
 		X = 1;
 		rotate = false;
 		break;
-
 	}
 
 	glm::mat4 model = glm::mat4(1.0f);

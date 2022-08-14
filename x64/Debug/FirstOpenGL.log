@@ -1,5 +1,3 @@
-﻿  RubiksCubeModel.cpp
-  main.cpp
-D:\GitHub\OpenGLProject\src\main.cpp(47,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-  Создание кода...
+﻿  GL_init.cpp
+D:\GitHub\OpenGLProject\src\GL_init.cpp(43,12): warning C4305: return: усечение из "int" в "bool"
   FirstOpenGL.vcxproj -> D:\GitHub\OpenGLProject\x64\Debug\FirstOpenGL.exe

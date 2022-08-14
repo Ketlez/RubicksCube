@@ -16,7 +16,7 @@ void main()
    
 
   if((abs(Pos.x)>=0.45&&abs(Pos.x)<0.55||abs(Pos.y)>=0.45&&abs(Pos.y)<0.55||abs(Pos.z)>=0.45&&abs(Pos.z)<0.55)||(abs(Pos.x)+abs(Pos.y)>=2.9||abs(Pos.x)+abs(Pos.z)>=2.9||abs(Pos.z)+abs(Pos.y)>=2.9))
-  FragColor = vec4(1,1,1,1);
+  FragColor = vec4(0,0,0,1);
   else
   FragColor = vec4(ColorCub, 1);
 }

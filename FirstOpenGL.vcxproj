@@ -145,8 +145,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\EBO.cpp" />
     <ClCompile Include="src\glad.c" />
+    <ClCompile Include="src\GL_init.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\RubicsCubeMove.cpp" />
     <ClCompile Include="src\RubiksCubeModel.cpp" />
@@ -161,17 +163,17 @@
     <Text Include="FfragmentShader.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\EBO.h" />
     <ClInclude Include="src\RubiksCubeModel.h" />
     <ClInclude Include="src\RubiksCubeMove.h" />
     <ClInclude Include="src\Shader.h" />
-    <ClInclude Include="src\GLFW.h" />
+    <ClInclude Include="src\GL_init.h" />
     <ClInclude Include="src\stb_image.h" />
     <ClInclude Include="src\Texture.h" />
     <ClInclude Include="src\VAO.h" />
     <ClInclude Include="src\VBO.h" />
-    <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="texture\d848b4d0b5e21b0869d32f22c2ec8cd1.jpg" />

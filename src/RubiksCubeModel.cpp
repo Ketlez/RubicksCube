@@ -51,12 +51,11 @@ void RubiksCube::Model::generationCube(int numberTurns)
 		int randomRotate = rand() % 12;
 		Move move((RubiksCube::Move::Type)randomRotate, 1.f);
 		move.drawAtMove(&vertices[0], m_shader, m_vbo, 1.f);
-		std::cout << randomRotate;
+		
 		if (randomRotate < 6)
 			randomRotate += 6;
 		else
 			randomRotate -= 6;
-		std::cout << randomRotate << std::endl;
 		pushMove(RubiksCube::Move((RubiksCube::Move::Type)randomRotate, 1.f));
 	}
 }
