@@ -1,3 +1,2 @@
-﻿  GL_init.cpp
-D:\GitHub\OpenGLProject\src\GL_init.cpp(43,12): warning C4305: return: усечение из "int" в "bool"
+﻿  RubicsCubeMove.cpp
   FirstOpenGL.vcxproj -> D:\GitHub\OpenGLProject\x64\Debug\FirstOpenGL.exe

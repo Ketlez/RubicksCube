@@ -85,11 +85,16 @@ bool RubiksCube::Move::rotate(
 	RotateFace face,
 	bool isClockwise,
 	float& currentTime,
-	const float timeInSec,
-	const float deltaTime)
+	float timeInSec,
+	float deltaTime)
 {
 	currentTime += deltaTime;
 	bool isAnimationOver = currentTime >= timeInSec;
+	if (isAnimationOver)
+	{
+		deltaTime = deltaTime - (currentTime - timeInSec);
+		currentTime = timeInSec;
+	}
 
 	int X = 0;
 	int Y = 0;
@@ -124,6 +129,8 @@ bool RubiksCube::Move::rotate(
 		break;
 	}
 
+	
+
 	glm::mat4 model = glm::mat4(1.0f);
 	glm::mat4 reverseModel = glm::mat4(1.0f);
 	model = glm::rotate(glm::mat4(1.0f), (isClockwise ? 1.f : -1.f) * glm::radians(deltaTime / timeInSec * 90.f), glm::vec3(X, Y, Z));
@@ -153,8 +160,6 @@ bool RubiksCube::Move::rotate(
 					vertices[i * 216 + j * 6 + 0] = round(vertices[i * 216 + j * 6 + 0] * 10) / 10;
 					vertices[i * 216 + j * 6 + 1] = round(vertices[i * 216 + j * 6 + 1] * 10) / 10;
 					vertices[i * 216 + j * 6 + 2] = round(vertices[i * 216 + j * 6 + 2] * 10) / 10;
-
-					
 				}
 				//std::cout << vertices[i * 216 + j * 6 + 0] << std::endl;
 			}

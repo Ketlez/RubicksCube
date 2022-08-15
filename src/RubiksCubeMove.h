@@ -49,8 +49,8 @@ private:
 		RotateFace face,
 		bool isClockwise,
 		float& currentTime,
-		const float timeInSec,
-		const float deltaTime);
+		float timeInSec,
+		float deltaTime);
 
 	const Type m_type;
 	const float m_timeInSec;

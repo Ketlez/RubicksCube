@@ -3,7 +3,6 @@
 RubiksCube::Model::Model()
 	: m_shader("FvertexShader.txt", "FfragmentShader.txt")
 {
-
 	m_vao.bind();
 	m_vbo.bind();
 	m_vbo.setData(vertices, sizeof(vertices));
