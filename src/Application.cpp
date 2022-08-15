@@ -113,7 +113,8 @@ void Application::launchApp()
     int w, h;
 
     RubiksCube::Model cube;
-    cube.generationCube(50);
+    cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::IDLE, 1.f));
+    cube.shuffleAndSolve(20, 0.1f, 2.0f, 0.6f);
 
     while (!glfwWindowShouldClose(window))
     {

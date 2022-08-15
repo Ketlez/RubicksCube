@@ -12,8 +12,13 @@ RubiksCube::Move::Move(Type type, const float timeInSec)
 {
 }
 
+
+
 bool RubiksCube::Move::drawAtMove(float* vertices, Shader &shader, VBO &vbo, const float deltaTime)
 {
+	//отрисовывание статичниго кубика
+	if (m_type == Type::IDLE)
+		return staticDraw(deltaTime);
 	bool isClockwise = true;
 	RotateFace face = RotateFace::FRONT;
 	switch (m_type) {
@@ -76,6 +81,15 @@ bool RubiksCube::Move::drawAtMove(float* vertices, Shader &shader, VBO &vbo, con
 		m_currentTime,
 		m_timeInSec,
 		deltaTime);
+}
+
+RubiksCube::Move::Type RubiksCube::Move::reverse(Type type)
+{
+	if ((int)type < 6)
+		(int&)type += 6;
+	else
+		(int&)type -= 6;
+	return type;
 }
 
 bool RubiksCube::Move::rotate(
@@ -161,13 +175,22 @@ bool RubiksCube::Move::rotate(
 					vertices[i * 216 + j * 6 + 1] = round(vertices[i * 216 + j * 6 + 1] * 10) / 10;
 					vertices[i * 216 + j * 6 + 2] = round(vertices[i * 216 + j * 6 + 2] * 10) / 10;
 				}
-				//std::cout << vertices[i * 216 + j * 6 + 0] << std::endl;
+				
 			}
 		flag = true;
 	}
 
 	
 	vbo.setData(vertices, sizeof(vertices[0])*5832);
+	glDrawArrays(GL_TRIANGLES, 0, 972);
+
+	return isAnimationOver;
+}
+
+bool RubiksCube::Move::staticDraw(float deltaTime)
+{
+	m_currentTime += deltaTime;
+	bool isAnimationOver = m_currentTime >= m_timeInSec;
 	glDrawArrays(GL_TRIANGLES, 0, 972);
 
 	return isAnimationOver;

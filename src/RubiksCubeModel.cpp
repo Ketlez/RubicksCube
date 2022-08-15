@@ -1,4 +1,5 @@
 #include "RubiksCubeModel.h"
+#include <vector>
 
 RubiksCube::Model::Model()
 	: m_shader("FvertexShader.txt", "FfragmentShader.txt")
@@ -39,24 +40,30 @@ void RubiksCube::Model::draw(glm::mat4 viewMatrix, glm::mat4 projectionMatrix, g
 		return;
 	}
 	
-	if (m_moves.top().drawAtMove(&vertices[0], m_shader, m_vbo, deltaTime))
+	if (m_moves.front().drawAtMove(&vertices[0], m_shader, m_vbo, deltaTime))
 		m_moves.pop();
 }
 
-void RubiksCube::Model::generationCube(int numberTurns)
+void RubiksCube::Model::shuffleAndSolve(const size_t nMoves, const float shuffleMoveSpedInSec, const float idleTimeInSec, const float solveMoveSpedInSec)
 {
-	for (int i = 0; i < numberTurns; i++)
+	std::srand(time(0));
+	std::vector<RubiksCube::Move::Type> creatMove(nMoves);
+
+	for (int i = 0; i < nMoves; i++)
 	{
 		int randomRotate = rand() % 12;
-		Move move((RubiksCube::Move::Type)randomRotate, 1.f);
-		move.drawAtMove(&vertices[0], m_shader, m_vbo, 1.f);
-		
-		if (randomRotate < 6)
-			randomRotate += 6;
-		else
-			randomRotate -= 6;
-		pushMove(RubiksCube::Move((RubiksCube::Move::Type)randomRotate, 1.f));
+		while(i!=0 && creatMove[i - 1] == Move::reverse((Move::Type)randomRotate))
+			randomRotate = rand() % 12;
+		creatMove[i] = (RubiksCube::Move::Type)randomRotate;
+		pushMove(RubiksCube::Move((RubiksCube::Move::Type)randomRotate, shuffleMoveSpedInSec));
 	}
+	pushMove(RubiksCube::Move(RubiksCube::Move::Type::IDLE, idleTimeInSec));
+
+	for (int i = nMoves -1; i >= 0; i--)
+	{
+		pushMove(RubiksCube::Move(Move::reverse(creatMove[i]), solveMoveSpedInSec));
+	}
+
 }
 
 void RubiksCube::Model::drawStatic()

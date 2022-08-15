@@ -22,8 +22,10 @@ public:
 		L_,
 		U_,
 		D_,
-		B_
+		B_,
+		IDLE
 	};
+
 
 	Move(Type type, const float timeInSec = 0.5f);
 
@@ -32,6 +34,8 @@ public:
 		Shader &shader, 
 		VBO &vbo,
 		const float deltaTime);
+
+	static Type reverse(Type type);
 private:
 	enum class RotateFace
 	{
@@ -51,6 +55,7 @@ private:
 		float& currentTime,
 		float timeInSec,
 		float deltaTime);
+	bool staticDraw(float deltaTime);
 
 	const Type m_type;
 	const float m_timeInSec;
