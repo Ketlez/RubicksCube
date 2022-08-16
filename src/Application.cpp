@@ -112,9 +112,11 @@ void Application::launchApp()
 {
     int w, h;
 
-    RubiksCube::Model cube;
+    //RubiksCube::ColorScheme Scheme;
+    //RubiksCube::Model cube(RubiksCube::ColorScheme());
+    RubiksCube::Model cube(RubiksCube::ColorScheme::Classic);
     cube.pushMove(RubiksCube::Move(RubiksCube::Move::Type::IDLE, 1.f));
-    cube.shuffleAndSolve(20, 0.1f, 2.0f, 0.6f);
+    cube.shuffleAndSolve(50, 0.1f, 1.0f, 0.6f);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -124,11 +126,13 @@ void Application::launchApp()
         processInput(window);
 
 
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearColor(0.1f, 0.3f, 0.3f, 0.2f);
+        //glClearColor(0.f, 0.f, 0.f, 0.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glfwGetWindowSize(window, &w, &h);
-
+        if (h == 0)
+            h = 1;
 
         glm::mat4 view = camera.GetViewMatrix();
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)w / (float)(h), 0.01f, 100.0f);
