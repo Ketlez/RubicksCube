@@ -1,4 +1,0 @@
-F:\FirstOpenGL\x64\Debug\FirstOpenGL.exe
-F:\GitHub\OpenGLProject\x64\Debug\FirstOpenGL.exe
-D:\GitHub\OpenGLProject\x64\Debug\FirstOpenGL.exe
-D:\GitHub\RubicksCube\x64\Debug\FirstOpenGL.exe
