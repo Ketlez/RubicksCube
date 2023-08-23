@@ -15,10 +15,6 @@ void main()
 {
     ColorCub = aColorCub;
 
-
-   //if(abs(aPos.x)!=0.5f||abs(aPos.x)!=1.5f||abs(aPos.y)!=0.5f||abs(aPos.y)!=1.5f||abs(aPos.z)!=0.5f||abs(aPos.z)!=1.5f)
-
-
    if(mod(abs(aPos.x)+abs(aPos.y)+abs(aPos.z), 0.5)>0)
    {
         Pos = reverseModel * vec4(aPos, 1.0);

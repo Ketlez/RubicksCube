@@ -1,6 +1,6 @@
 #include "RubiksCubeMove.h"
 
-#include <glm/gtc/matrix_transform.hpp>
+//#include <glm/gtc/matrix_transform.hpp>
 
 #include "VBO.h"
 #include "Shader.h"
@@ -168,7 +168,7 @@ bool RubiksCube::Move::rotate(
 				vertices[i * 216 + j * 6 + 1] = Vert.y;
 				vertices[i * 216 + j * 6 + 2] = Vert.z;
 
-				//избовляемся от лишнего доворота т.к. currentTime >= timeInSec
+				//избовляемся от лишнего доворота из-за погрешности в вычислениях
 				if (isAnimationOver)
 				{
 					vertices[i * 216 + j * 6 + 0] = round(vertices[i * 216 + j * 6 + 0] * 10) / 10;
